@@ -42,7 +42,7 @@ export const getStatement = async (req, res) => {
 export const updateStatement = async (req, res) => {
     try {
         console.log('request,status');
-        const status = req.params.caseStatus
+        const status = req.body.caseStatus
         const addData = await statementModel.findByIdAndUpdate(req.params.id, { caseStatus: status },)
         res.status(200).send(addData)
 
