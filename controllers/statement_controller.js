@@ -17,11 +17,15 @@ export const addstatement = async (req, res) => {
 
 export const getStatements = async (req, res, next) => {
     try {
-        console.log('request', req.body)
-        const getData = await statementModel.find();
-        res.status(200).send(getData);
-
-
+        const dateQuery = req.query.date
+        if (dateQuery) {
+            const dateQuery = await statementModel.find({ date: dateQuery });
+            return res.status(200).send(addData)
+        } else {
+            const addData = await statementModel.find()
+            return res.status(200).send(addData)
+        }
+        res.status(200).json(getData);
     } catch (error) {
         next(error);
     }
@@ -39,13 +43,27 @@ export const getStatement = async (req, res) => {
 }
 
 
+
+
 export const updateStatement = async (req, res) => {
     try {
-        console.log('request,status');
+        // console.log(req);
         const status = req.body.caseStatus
         const addData = await statementModel.findByIdAndUpdate(req.params.id, { caseStatus: status },)
         res.status(200).send(addData)
 
+    } catch (error) {
+        next(error);
+    }
+}
+
+
+export const filterStatement = async (req, res) => {
+    try {
+        // console.log(req);
+        const date = req.body.date
+        const addData = await statementModel.find()
+        res.status(200).send(addData)
     } catch (error) {
         next(error);
     }
